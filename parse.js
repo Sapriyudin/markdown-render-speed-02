@@ -26,8 +26,8 @@ function F(a){return a.trim().replace(T.multipleSpaceGlobal," ").toLowerCase().t
 `)}}blockquote(e){let t=this.rules.block.blockquote.exec(e);if(t){let n=L(t[0],`
 `).split(`
 `),s="",r="",o=[];for(;n.length>0;){let i=!1,l=[],p;for(p=0;p<n.length;p++)if(this.rules.other.blockquoteStart.test(n[p]))l.push(n[p]),i=!0;else if(!i)l.push(n[p]);else break;n=n.slice(p);let h=l.join(`
-`),u=h.replace(this.rules.other.blockquoteMarkerWhitespace,(g,b,m)=>b+J(m,b.length)).replace(this.rules.other.blockquoteSetextReplace,`
-    $1`).replace(this.rules.other.blockquoteSetextReplace2,"");s=s?`${s}
+`),u=h;if(h.includes(String.fromCharCode(9)))u=u.replace(this.rules.other.blockquoteMarkerWhitespace,(g,b,m)=>b+J(m,b.length));if(/\n {0,3}[=-]/.test(h))u=u.replace(this.rules.other.blockquoteSetextReplace,`
+    $1`);u=u.replace(this.rules.other.blockquoteSetextReplace2,"");s=s?`${s}
 ${h}`:h,r=r?`${r}
 ${u}`:u;let d=this.lexer.state.top;if(this.lexer.state.top=!0,this.lexer.blockTokens(u,o,!0),this.lexer.state.top=d,n.length===0)break;let k=o.at(-1);if(k?.type==="code"||k?.type==="heading"||k?.type==="hr"||k?.type==="html"||k?.type==="table")break;if(k?.type==="blockquote"){let g=k,b=n.join(`
 `),m=g.raw+`
